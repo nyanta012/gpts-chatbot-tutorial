@@ -29,7 +29,7 @@ function doPost(e) {
     return createJsonResponse(500, "Error: " + error.message);
   }
 }
-　
+
 /**
  * JSON形式のレスポンスを生成する
  */
@@ -47,7 +47,9 @@ function createJsonResponse(status, message) {
  */
 function testDoPost() { 
   try {
-    doPost({postData: {contents: JSON.stringify({word: "example"})}});
+    var response = doPost({postData: {contents: JSON.stringify({word: "example"})}});
+    var content = response.getContent();
+    Logger.log("Response: " + content);
   } catch (error) {
     Logger.log("Error in testDoPost: " + error.message);
   }
