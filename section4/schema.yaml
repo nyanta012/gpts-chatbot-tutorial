@@ -1,0 +1,35 @@
+openapi: 3.1.0
+info:
+  title: Add English word to the Google Sheet
+  version: 1.0.0
+servers:
+- url: https://script.google.com
+paths:
+  /macros/s/{デプロイID}}/exec:
+    post:
+      summary: Adds a word to a spreadsheet
+      operationId: AddEnglishWord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                word:
+                  type: string
+                  description: The English word to be added to the spreadsheet.
+      responses:
+        200:
+          description: Word added successfully or an error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: # GASは200番のレスポンスしかできないので、ステータスコードはレスポンスに含めて自分で返す
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    description: Success or error message
