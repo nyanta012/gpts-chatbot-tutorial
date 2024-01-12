@@ -5,7 +5,7 @@ info:
 servers:
 - url: https://script.google.com
 paths:
-  /macros/s/{デプロイID}}/exec:
+  /macros/s/{デプロイID}/exec:
     post:
       summary: Adds a word to a spreadsheet
       operationId: AddEnglishWord
