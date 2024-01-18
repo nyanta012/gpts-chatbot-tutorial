@@ -1,0 +1,73 @@
+openapi: 3.1.0
+info:
+  title: Tic-Tac-Toe API
+  version: 1.0.0
+servers:
+  - url: https://〇〇〇.cloudfunctions.net
+paths:
+  /tic-tac-toe-api:
+    post:
+      summary: Process a move in a tic-tac-toe game
+      operationId: playTicTacToe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                board:
+                  $ref: '#/components/schemas/Board'
+                action:
+                  type: integer
+                  format: int32
+                  minimum: 1
+                  maximum: 9
+                  description: "Position to place the player's mark (1-9)."
+      responses:
+        '200':
+          description: Successfully processed the game move.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  board:
+                    $ref: '#/components/schemas/Board'
+                  status:
+                    type: string
+                    enum: ["Win for O", "Win for X", "Draw", "Ongoing"]
+        '400':
+          description: Bad request - invalid input or game state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Board:
+      type: array
+      items:
+        type: array
+        items:
+          type: string
+          enum: ["X", "O", " "]
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing the reason for the error.
