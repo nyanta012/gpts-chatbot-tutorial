@@ -45,7 +45,6 @@ class TicTacToeGame:
                 (r, c) for r in range(3) for c in range(3) if self.board[r][c] == " "
             ]
             x_row, x_col = random.choice(empty_cells)
-            self.board[x_row][x_col] = "X"
             status = self.make_move(x_row * 3 + x_col + 1, "X")
         return self.board, status
 
