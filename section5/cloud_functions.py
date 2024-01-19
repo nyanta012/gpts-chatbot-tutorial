@@ -67,7 +67,7 @@ def play_game(request: Request):
         if len(board) != 3 or any(len(row) != 3 for row in board):
             return jsonify({"error": "Invalid board size. The size of the game board must be 3x3."}), 400
         if not all(cell in [" ", "O", "X"] for row in board for cell in row):
-            return jsonify({"error": "Invalid board values. You can only use ' ', 'X', 'O."}), 400
+            return jsonify({"error": "Invalid board values. You can only use ' ', 'X', 'O'"}), 400
 
         count_O = sum(row.count("O") for row in board)
         count_X = sum(row.count("X") for row in board)
