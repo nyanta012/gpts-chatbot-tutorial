@@ -1,0 +1,78 @@
+openapi: 3.1.0
+info:
+  title: JSONPlaceholder API
+  version: 1.0.0
+  description: A free fake API for testing and prototyping.
+servers:
+  - url: https://jsonplaceholder.typicode.com
+
+paths:
+  /todos:
+    get:
+      summary: Get all todos
+      operationId: getAllTodos
+      responses:
+        '200': {$ref: '#/components/responses/TodoArray'}
+        default: {$ref: '#/components/responses/DefaultError'}
+
+    post:
+      summary: Create a new todo
+      operationId: createTodo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Todo'}
+      responses:
+        '201': {$ref: '#/components/responses/Todo'}
+        default: {$ref: '#/components/responses/DefaultError'}
+
+  /todos/{todoId}:
+    get:
+      summary: Get a todo by ID
+      operationId: getTodoById
+      parameters: 
+        - in: path
+          name: todoId
+          required: true
+          schema: {type: integer}
+      responses:
+        '200': {$ref: '#/components/responses/Todo'}
+        default: {$ref: '#/components/responses/DefaultError'}
+
+components:
+  responses:
+    Todo:
+      description: A single todo
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Todo'}
+
+    TodoArray:
+      description: A list of todos
+      content:
+        application/json:
+          schema:
+            type: array
+            items: {$ref: '#/components/schemas/Todo'}
+
+    DefaultError:
+      description: Unexpected error
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+
+  schemas:
+    Todo:
+      type: object
+      properties:
+        userId: {type: integer}
+        id: {type: integer}
+        title: {type: string}
+        completed: {type: boolean}
+
+    Error:
+      type: object
+      properties:
+        code: {type: integer}
+        message: {type: string}
